@@ -9,24 +9,6 @@ use Illuminate\Queue\Connectors\ConnectorInterface;
 class AzureConnector implements ConnectorInterface {
 
 	/**
-	 * The current request instance.
-	 *
-	 * @var \Illuminate\Http\Request;
-	 */
-	protected $request;
-
-    /**
-     * Create a new Azure connector instance.
-     *
-     * @param  \Illuminate\Http\Request $request
-     *
-     * @return \Stayallive\LaravelAzureServicebusQueue\AzureConnector
-     */
-	public function __construct(Request $request) {
-		$this->request = $request;
-	}
-
-	/**
 	 * Establish a queue connection.
 	 *
 	 * @param  array $config
@@ -37,7 +19,7 @@ class AzureConnector implements ConnectorInterface {
         $connectionString = 'Endpoint=' . $config['endpoint'] . ';SharedSecretIssuer=' . $config['secretissuer'] . ';SharedSecretValue=' . $config['secret'];
 		$serviceBusRestProxy = ServicesBuilder::getInstance()->createServiceBusService($connectionString);
 
-		return new AzureQueue($serviceBusRestProxy, $this->request, $config['queue']);
+		return new AzureQueue($serviceBusRestProxy, $config['queue']);
 	}
 
 }
