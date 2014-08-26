@@ -3,13 +3,20 @@ Windows Azure Servicebus Queue driver for Laravel
 
 #### Installation
 
-Require this package in your composer.json and run composer update:
+Require this package in your `composer.json`:
 
 	"stayallive/laravel-azure-servicebus-queue": "1.*"
 
-or run:
+Add the following pear repository in your `composer.json` required by the Azure SDK:
 
-	composer require "stayallive/laravel-azure-servicebus-queue"
+    "repositories": [
+        {
+            "type": "pear",
+            "url": "http://pear.php.net"
+        }
+    ],
+
+Run composer update!
 
 After composer update is finished you need to add ServiceProvider to your `providers` array in `app/config/app.php`:
 
