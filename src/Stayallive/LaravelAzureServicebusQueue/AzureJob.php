@@ -3,11 +3,12 @@
 namespace Stayallive\LaravelAzureServicebusQueue;
 
 use Illuminate\Container\Container;
+use Illuminate\Contracts\Queue\Job as JobContract;
 use Illuminate\Queue\Jobs\Job;
 use WindowsAzure\ServiceBus\Internal\IServiceBus;
 use WindowsAzure\ServiceBus\Models\BrokeredMessage;
 
-class AzureJob extends Job
+class AzureJob extends Job implements JobContract
 {
 
     /**
