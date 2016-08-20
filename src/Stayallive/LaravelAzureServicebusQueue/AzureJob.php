@@ -137,5 +137,4 @@ class AzureJob extends Job implements JobContract
     {
         return $this->job->getBody();
     }
-
 }
