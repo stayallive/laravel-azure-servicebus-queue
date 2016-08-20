@@ -6,7 +6,6 @@ use Stayallive\LaravelAzureServicebusQueue\AzureConnector;
 
 class ServiceProvider extends \Illuminate\Support\ServiceProvider
 {
-
     /**
      * Register the service provider.
      *

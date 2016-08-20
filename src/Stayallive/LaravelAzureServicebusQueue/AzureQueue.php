@@ -2,15 +2,14 @@
 
 namespace Stayallive\LaravelAzureServicebusQueue;
 
-use Illuminate\Contracts\Queue\Queue as QueueContract;
 use Illuminate\Queue\Queue;
+use Illuminate\Contracts\Queue\Queue as QueueContract;
 use WindowsAzure\ServiceBus\Internal\IServiceBus;
 use WindowsAzure\ServiceBus\Models\BrokeredMessage;
 use WindowsAzure\ServiceBus\Models\ReceiveMessageOptions;
 
 class AzureQueue extends Queue implements QueueContract
 {
-
     /**
      * The Azure IServiceBus instance.
      *
@@ -28,25 +27,23 @@ class AzureQueue extends Queue implements QueueContract
     /**
      * Create a new Azure IQueue queue instance.
      *
-     * @param  \WindowsAzure\ServiceBus\Internal\IServiceBus $azure
-     * @param  string                                        $default
+     * @param \WindowsAzure\ServiceBus\Internal\IServiceBus $azure
+     * @param string                                        $default
      *
      * @return \Stayallive\LaravelAzureServicebusQueue\AzureQueue
      */
     public function __construct(IServiceBus $azure, $default)
     {
-        $this->azure = $azure;
+        $this->azure   = $azure;
         $this->default = $default;
     }
 
     /**
      * Push a new job onto the queue.
      *
-     * @param  string $job
-     * @param  mixed  $data
-     * @param  string $queue
-     *
-     * @return void
+     * @param string $job
+     * @param mixed  $data
+     * @param string $queue
      */
     public function push($job, $data = '', $queue = null)
     {
@@ -56,9 +53,9 @@ class AzureQueue extends Queue implements QueueContract
     /**
      * Push a raw payload onto the queue.
      *
-     * @param  string $payload
-     * @param  string $queue
-     * @param  array  $options
+     * @param string $payload
+     * @param string $queue
+     * @param array  $options
      *
      * @return mixed
      */
@@ -72,12 +69,10 @@ class AzureQueue extends Queue implements QueueContract
     /**
      * Push a new job onto the queue after a delay.
      *
-     * @param  int    $delay
-     * @param  string $job
-     * @param  mixed  $data
-     * @param  string $queue
-     *
-     * @return void
+     * @param int    $delay
+     * @param string $job
+     * @param mixed  $data
+     * @param string $queue
      */
     public function later($delay, $job, $data = '', $queue = null)
     {
@@ -96,7 +91,7 @@ class AzureQueue extends Queue implements QueueContract
     /**
      * Pop the next job off of the queue.
      *
-     * @param  string $queue
+     * @param string $queue
      *
      * @return \Illuminate\Queue\Jobs\Job|null
      */
@@ -117,7 +112,7 @@ class AzureQueue extends Queue implements QueueContract
     /**
      * Get the queue or return the default.
      *
-     * @param  string|null $queue
+     * @param string|null $queue
      *
      * @return string
      */

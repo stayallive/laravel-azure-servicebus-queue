@@ -2,15 +2,14 @@
 
 namespace Stayallive\LaravelAzureServicebusQueue;
 
+use Illuminate\Queue\Jobs\Job;
 use Illuminate\Container\Container;
 use Illuminate\Contracts\Queue\Job as JobContract;
-use Illuminate\Queue\Jobs\Job;
 use WindowsAzure\ServiceBus\Internal\IServiceBus;
 use WindowsAzure\ServiceBus\Models\BrokeredMessage;
 
 class AzureJob extends Job implements JobContract
 {
-
     /**
      * The Azure IServiceBus instance.
      *
@@ -38,7 +37,7 @@ class AzureJob extends Job implements JobContract
      * @param \Illuminate\Container\Container                 $container
      * @param \WindowsAzure\ServiceBus\Internal\IServiceBus   $azure
      * @param \WindowsAzure\ServiceBus\Models\BrokeredMessage $job
-     * @param  string                                         $queue
+     * @param string                                          $queue
      *
      * @return \Stayallive\LaravelAzureServicebusQueue\AzureJob
      */
@@ -52,8 +51,6 @@ class AzureJob extends Job implements JobContract
 
     /**
      * Fire the job.
-     *
-     * @return void
      */
     public function fire()
     {
@@ -62,8 +59,6 @@ class AzureJob extends Job implements JobContract
 
     /**
      * Delete the job from the queue.
-     *
-     * @return void
      */
     public function delete()
     {
@@ -73,9 +68,7 @@ class AzureJob extends Job implements JobContract
     /**
      * Release the job back into the queue.
      *
-     * @param  int $delay
-     *
-     * @return void
+     * @param int $delay
      */
     public function release($delay = 0)
     {
