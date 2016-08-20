@@ -135,5 +135,4 @@ class AzureQueue extends Queue implements QueueContract
     {
         return $this->azure;
     }
-
 }

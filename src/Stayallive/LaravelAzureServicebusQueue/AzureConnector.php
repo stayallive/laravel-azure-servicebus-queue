@@ -22,5 +22,4 @@ class AzureConnector implements ConnectorInterface
 
         return new AzureQueue($serviceBusRestProxy, $config['queue']);
     }
-
 }
