@@ -9,7 +9,8 @@ use WindowsAzure\ServiceBus\Internal\IServiceBus;
 use WindowsAzure\ServiceBus\Models\BrokeredMessage;
 use WindowsAzure\ServiceBus\Models\ReceiveMessageOptions;
 
-class AzureQueue extends Queue implements QueueInterface {
+class AzureQueue extends Queue implements QueueInterface
+{
 
     /**
      * The Azure IServiceBus instance.
@@ -33,7 +34,8 @@ class AzureQueue extends Queue implements QueueInterface {
      *
      * @return \Stayallive\LaravelAzureServicebusQueue\AzureQueue
      */
-    public function __construct(IServiceBus $azure, $default) {
+    public function __construct(IServiceBus $azure, $default)
+    {
         $this->azure   = $azure;
         $this->default = $default;
     }
@@ -47,7 +49,8 @@ class AzureQueue extends Queue implements QueueInterface {
      *
      * @return void
      */
-    public function push($job, $data = '', $queue = null) {
+    public function push($job, $data = '', $queue = null)
+    {
         $this->pushRaw($this->createPayload($job, $data), $queue);
     }
 
@@ -60,7 +63,8 @@ class AzureQueue extends Queue implements QueueInterface {
      *
      * @return mixed
      */
-    public function pushRaw($payload, $queue = null, array $options = array()) {
+    public function pushRaw($payload, $queue = null, array $options = array())
+    {
         $message = new BrokeredMessage($payload);
 
         $this->azure->sendQueueMessage($this->getQueue($queue), $message);
@@ -76,7 +80,8 @@ class AzureQueue extends Queue implements QueueInterface {
      *
      * @return void
      */
-    public function later($delay, $job, $data = '', $queue = null) {
+    public function later($delay, $job, $data = '', $queue = null)
+    {
         $payload = $this->createPayload($job, $data);
 
         $release = new \DateTime;
@@ -96,7 +101,8 @@ class AzureQueue extends Queue implements QueueInterface {
      *
      * @return \Illuminate\Queue\Jobs\Job|null
      */
-    public function pop($queue = null) {
+    public function pop($queue = null)
+    {
         $queue = $this->getQueue($queue);
 
         $options = new ReceiveMessageOptions;
@@ -116,7 +122,8 @@ class AzureQueue extends Queue implements QueueInterface {
      *
      * @return string
      */
-    public function getQueue($queue) {
+    public function getQueue($queue)
+    {
         return $queue ?: $this->default;
     }
 
@@ -125,8 +132,8 @@ class AzureQueue extends Queue implements QueueInterface {
      *
      * @return \WindowsAzure\Queue\Internal\IQueue
      */
-    public function getAzure() {
+    public function getAzure()
+    {
         return $this->azure;
     }
-
 }
