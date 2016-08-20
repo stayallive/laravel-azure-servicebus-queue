@@ -2,12 +2,14 @@
 
 namespace Stayallive\LaravelAzureServicebusQueue;
 
-use Illuminate\Queue\Jobs\Job;
 use Illuminate\Container\Container;
+use Illuminate\Contracts\Queue\Job as JobContract;
+use Illuminate\Queue\Jobs\Job;
 use WindowsAzure\ServiceBus\Internal\IServiceBus;
 use WindowsAzure\ServiceBus\Models\BrokeredMessage;
 
-class AzureJob extends Job {
+class AzureJob extends Job implements JobContract
+{
 
     /**
      * The Azure IServiceBus instance.
@@ -40,10 +42,11 @@ class AzureJob extends Job {
      *
      * @return \Stayallive\LaravelAzureServicebusQueue\AzureJob
      */
-    public function __construct(Container $container, IServiceBus $azure, BrokeredMessage $job, $queue) {
-        $this->azure     = $azure;
-        $this->job       = $job;
-        $this->queue     = $queue;
+    public function __construct(Container $container, IServiceBus $azure, BrokeredMessage $job, $queue)
+    {
+        $this->azure = $azure;
+        $this->job = $job;
+        $this->queue = $queue;
         $this->container = $container;
     }
 
@@ -52,7 +55,8 @@ class AzureJob extends Job {
      *
      * @return void
      */
-    public function fire() {
+    public function fire()
+    {
         $this->resolveAndFire(json_decode($this->getRawBody(), true));
     }
 
@@ -61,7 +65,8 @@ class AzureJob extends Job {
      *
      * @return void
      */
-    public function delete() {
+    public function delete()
+    {
         $this->azure->deleteMessage($this->job);
     }
 
@@ -72,7 +77,8 @@ class AzureJob extends Job {
      *
      * @return void
      */
-    public function release($delay = 0) {
+    public function release($delay = 0)
+    {
         $release = new \DateTime;
         $release->setTimezone(new \DateTimeZone('UTC'));
         $release->add(new \DateInterval('PT' . $delay . 'S'));
@@ -87,7 +93,8 @@ class AzureJob extends Job {
      *
      * @return int
      */
-    public function attempts() {
+    public function attempts()
+    {
         return $this->job->getDeliveryCount();
     }
 
@@ -96,7 +103,8 @@ class AzureJob extends Job {
      *
      * @return \Illuminate\Container\Container
      */
-    public function getContainer() {
+    public function getContainer()
+    {
         return $this->container;
     }
 
@@ -105,7 +113,8 @@ class AzureJob extends Job {
      *
      * @return \WindowsAzure\ServiceBus\Internal\IServiceBus
      */
-    public function getAzure() {
+    public function getAzure()
+    {
         return $this->azure;
     }
 
@@ -114,7 +123,8 @@ class AzureJob extends Job {
      *
      * @return \WindowsAzure\ServiceBus\Models\BrokeredMessage
      */
-    public function getAzureJob() {
+    public function getAzureJob()
+    {
         return $this->job;
     }
 
@@ -123,7 +133,8 @@ class AzureJob extends Job {
      *
      * @return string
      */
-    public function getRawBody() {
+    public function getRawBody()
+    {
         return $this->job->getBody();
     }
 
