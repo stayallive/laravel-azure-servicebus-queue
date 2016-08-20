@@ -5,16 +5,7 @@ Windows Azure Servicebus Queue driver for Laravel
 
 Require this package in your `composer.json`:
 
-	"stayallive/laravel-azure-servicebus-queue": "1.*"
-
-Add the following pear repository in your `composer.json` required by the Azure SDK:
-
-    "repositories": [
-        {
-            "type": "pear",
-            "url": "http://pear.php.net"
-        }
-    ],
+	"stayallive/laravel-azure-servicebus-queue": "2.*"
 
 Run composer update!
 
@@ -33,7 +24,9 @@ add the following to the `connection` array in `app/config/queue.php`, set your 
     )
 
 #### Usage
+
 Once you completed the configuration you can use Laravel Queue API. If you used other queue drivers you do not need to change anything else. If you do not know how to use Queue API, please refer to the official Laravel [documentation](http://laravel.com/docs/queues).
 
 #### Contribution
+
 You can contribute to this package by opening issues/pr's. Enjoy!
