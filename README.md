@@ -15,13 +15,13 @@ After composer update is finished you need to add ServiceProvider to your `provi
 
 add the following to the `connection` array in `app/config/queue.php`, set your `default` connection to `azure` and fill out your own connection data from the Azure Management portal:
 
-	'azure' => array(
-        'driver'       => 'azure.servicebus',
-        'endpoint'     => 'https://*.servicebus.windows.net',
-        'secret'       => '',
-        'secretissuer' => 'owner',
-        'queue'        => ''
-    )
+	'azure' => [
+        'driver'                => 'azure.servicebus',
+        'endpoint'              => 'https://*.servicebus.windows.net',
+        'sharedAccessKeyName'   => 'owner',
+        'sharedAccessKey'       => 'secret',
+        'queue'                 => ''
+    ]
 
 #### Usage
 
