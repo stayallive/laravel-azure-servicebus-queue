@@ -16,7 +16,7 @@ class AzureConnector implements ConnectorInterface
      */
     public function connect(array $config)
     {
-        $connectionString = 'Endpoint=' . $config['endpoint'] . ';SharedSecretIssuer=' . $config['secretissuer'] . ';SharedSecretValue=' . $config['secret'];
+        $connectionString = 'Endpoint=' . $config['endpoint'] . ';SharedAccessKeyName=' . $config['sharedAccessKeyName'] . ';SharedAccessKey=' . $config['sharedAccessKey'];
 
         return new AzureQueue(
             ServicesBuilder::getInstance()->createServiceBusService($connectionString),

@@ -50,14 +50,6 @@ class AzureJob extends Job implements JobContract
     }
 
     /**
-     * Fire the job.
-     */
-    public function fire()
-    {
-        $this->resolveAndFire(json_decode($this->getRawBody(), true));
-    }
-
-    /**
      * Delete the job from the queue.
      */
     public function delete()

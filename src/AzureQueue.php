@@ -5,6 +5,7 @@ namespace Stayallive\LaravelAzureServicebusQueue;
 use Illuminate\Queue\Queue;
 use Illuminate\Contracts\Queue\Queue as QueueContract;
 use WindowsAzure\ServiceBus\Internal\IServiceBus;
+use WindowsAzure\ServiceBus\Models\QueueInfo;
 use WindowsAzure\ServiceBus\Models\BrokeredMessage;
 use WindowsAzure\ServiceBus\Models\ReceiveMessageOptions;
 
@@ -36,6 +37,24 @@ class AzureQueue extends Queue implements QueueContract
     {
         $this->azure   = $azure;
         $this->default = $default;
+
+        // Check if the default queue exists and create it if it doesn't
+        $defaultQueueExist = false;
+
+        $existingQueues = $this->azure->listQueues()->getQueueInfos();
+
+        foreach ($existingQueues as $existingQueue) {
+            if ($existingQueue->getTitle() === $this->default) {
+                $defaultQueueExist = true;
+            }
+        }
+
+        if ($defaultQueueExist === false) {
+            $queueInfo = new QueueInfo($this->default);
+
+            // Create queue.
+            $this->azure->createQueue($queueInfo);
+        }
     }
 
     /**
@@ -118,6 +137,24 @@ class AzureQueue extends Queue implements QueueContract
      */
     public function getQueue($queue)
     {
+        // Because Azure doesn't create queues automatically,
+        // if the given queue doesn't exist, we create it here.
+        $queueExist = false;
+
+        $existingQueues = $this->azure->listQueues()->getQueueInfos();
+        foreach ($existingQueues as $existingQueue) {
+            if ($existingQueue->getTitle() === $queue) {
+                $queueExist = true;
+            }
+        }
+
+        if ($queueExist === false) {
+            $queueInfo = new QueueInfo($queue);
+
+            // Create queue.
+            $this->azure->createQueue($queueInfo);
+        }
+
         return $queue ?: $this->default;
     }
 
@@ -129,5 +166,18 @@ class AzureQueue extends Queue implements QueueContract
     public function getAzure()
     {
         return $this->azure;
+    }
+
+    /**
+    * Get the size of the queue.
+    *
+    * @param  string  $queue
+    * @return int
+    */
+    public function size($queue = null)
+    {
+        $queueInfo = $this->azure->getQueue($this->getQueue($queue));
+
+        return $queueInfo->getMessageCount();
     }
 }
