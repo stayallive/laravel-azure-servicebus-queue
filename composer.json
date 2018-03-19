@@ -22,7 +22,7 @@
         "microsoft/windowsazure": "^0.5.7"
     },
     "autoload": {
-        "psr-0": {
+        "psr-4": {
             "Stayallive\\LaravelAzureServicebusQueue\\": "src/"
         }
     },
